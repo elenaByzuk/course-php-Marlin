@@ -1,4 +1,9 @@
-<?php session_start();?>
+<?php 
+
+session_start();
+require '1_function.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,18 +65,13 @@
                             </div>
                             <div class="col-xl-6 ml-auto mr-auto">
                                 <div class="card p-4 rounded-plus bg-faded">
-                                    <?php if(isset($_SESSION['danger'])):?>
-                                    <div class="alert alert-danger text-dark" role="alert">
-                                        <?php echo $_SESSION['danger'];?>
-                                        <?php unset($_SESSION['danger']);?>
-                                    </div>
-                                    <?php endif;?>
-                                    <?php if(isset($_SESSION['success'])):?>
-                                        <div class="alert alert-success text-dark" role="success">
-                                        <?php echo $_SESSION['success'];?>
-                                        <?php unset($_SESSION['success']);?>
-                                    </div> 
-                                    <?php endif;?>
+                                    <!-- проверяем есть ли месседж в сессии? -->
+                                    <!-- если да: подставляем тип месседжа в класс в диве -->
+                                    <!-- внутрь дива выводим месседж -->
+                                    <?php if (isset($_SESSION['message'])) {
+                                        echo display_flash_message($_SESSION['message']['name'], $_SESSION['message']['text'], $_SESSION['message']['type']);
+                                        unset($_SESSION['message']);
+                                    } ?>
                                     <form id="js-login" novalidate="" action="1_page_register_handler.php" method="post">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>

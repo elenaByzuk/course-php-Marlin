@@ -1,8 +1,4 @@
 <?php
-session_start();
-
-$email = $_POST['email'];
-$password = $_POST['password'];
 
 function get_user_by_email($email) {
     $pdo = new PDO("pgsql:host=127.0.0.1;dbname=test", "postgres", "root");
@@ -22,12 +18,16 @@ function add_user($email, $password) {
      
 }
 
-function set_flash_message($name, $message) {
-    $_SESSION[$name] = $message;
+function set_flash_message($name, $message, $type) {
+    $_SESSION['message'] = [
+        'name' => $name, 
+        'text' => $message, 
+        'type' => $type
+    ];
 }
 
-function display_flash_message($name) {
-    
+function display_flash_message($name, $message, $type) {
+    return "<div class='alert alert-$name text-dark' role='$type'>$message</div>";
 }
 
 function redirect_to($path) {
